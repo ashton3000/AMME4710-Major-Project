@@ -54,7 +54,7 @@ im = imerode(im, se);
 subplot(4,1,3)
 imshow(im);
 
-
+% second random change
 subplot(4,1,4);
 imshow(im);
 
