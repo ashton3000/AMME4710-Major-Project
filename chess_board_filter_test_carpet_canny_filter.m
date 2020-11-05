@@ -48,7 +48,7 @@ subplot(4,1,2);
 imshow(im);
 
 
-
+% random change
 se  = strel('disk',8,0);
 im = imerode(im, se);
 subplot(4,1,3)
