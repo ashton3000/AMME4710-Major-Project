@@ -1,0 +1,38 @@
+clear;
+clc;
+
+im = rgb2gray(imread('boardpieces.jpeg'));
+
+[side_length, centrepoints] = getInitialData(im);
+
+
+
+
+%side_length = 276;
+
+%load('centre_points_board_pieces_rot_90');
+
+
+im = imread('boardpieces.jpeg');
+
+im = imrotate(im, 90);
+
+% im = imgaussfilt(im, 4);
+% 
+% se  = strel('disk',10,0);
+% im = imclose(im, se);
+%imshow(im);
+
+
+centre_point = centrepoints(1,:);
+colour1 = checkSquare2(centre_point, side_length, im);
+
+centre_point = centrepoints(6,:);
+colour2 = checkSquare2(centre_point, side_length, im);
+
+% for i = 1:6
+%     
+%     centre_point = centrepoints(i,:);
+%     colour(i) = checkSquare(centre_point, side_length, im);
+%     
+% end

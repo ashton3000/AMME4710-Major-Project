@@ -1,0 +1,32 @@
+
+clear;
+clc;
+
+side_length = 276;
+
+load('centre_points_board_pieces_rot_90');
+centre_point = centrepoints(1,:);
+
+im = (imread('boardpieces.jpeg'));
+
+im = imrotate(im, 90);
+
+for i = 1:12
+   if i > 6
+       j = 24+i;
+       
+   else
+       j = i;
+       
+   end
+   
+   imcropped = getCropped(centrepoints(j,:), side_length, im);
+   data_features(i,1) = mean(imcropped(:,:,1), 'all');
+   data_features(i,2) = mean(imcropped(:,:,2), 'all');
+   data_features(i,3) = mean(imcropped(:,:,3), 'all');
+   imcropped = rgb2hsv(imcropped);
+   data_features(i,4) = mean(
+    
+    
+    
+end

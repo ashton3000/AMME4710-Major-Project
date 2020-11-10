@@ -62,3 +62,7 @@ end
 hold on;
 
 scatter(centrepoints(:,1), centrepoints(:,2));
+
+D1 = pdist(centrepoints(1:2, :));
+D2 = pdist([centrepoints(1,:); centrepoints(7, :)]);
+D = (D1+D2)/2;
