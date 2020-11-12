@@ -11,12 +11,17 @@ function location_matrix = setupLocationMatrix(side_length, centrepoints, im)
         
         centre_point(1) = location_matrix(2, 2, 1);
         centre_point(2) = location_matrix(2, 2, 2); 
+        for i = 1:4
+            colour(i) = checkSquare2(centre_point, side_length, im);
+        end
+        colour1 = mode(colour);
         
-        colour1 = checkSquare2(centre_point, side_length, im);
-
         centre_point(1) = location_matrix(2, 7, 1);
         centre_point(2) = location_matrix(2, 7, 2);
-        colour2 = checkSquare2(centre_point, side_length, im);
+        for i = 1:4
+            colour(i) = checkSquare2(centre_point, side_length, im);
+        end
+        colour2 = mode(colour);
         
         switch colour1
             case 0
