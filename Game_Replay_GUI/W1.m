@@ -1,22 +1,27 @@
 clc
+clear
 
 
 %% Activity 1
-global chess_img
+global chess_img var
+var = 0 ;
+s = 0 ;
 chess_img = imread('chess.png') ;
 chess_img_info = imfinfo('chess.png');
+imshow(chess_img) ;
 
 pixels_per_col = chess_img_info.Width / 8 ;
 pixels_per_row = chess_img_info.Height / 8 ;
 
-row = input("Enter row number \n") ;
-col = input("\nEnter col number\n") ; 
-BoardPosition(row,col);
+% row = input("Enter row number \n") ;
+% col = input("\nEnter col number\n") ; 
+
+BoardPosition(2,5)
 
 %% Function declaration
 % Activity 1
 function BoardPosition(row,col)
-global chess_img 
+global chess_img var
 image = chess_img(1+row*(90):(row+1)*90,1+col*(90):(col+1)*90);
 figure()
 imshow(image);
@@ -38,12 +43,18 @@ for i =1:length(image)
     end
 end
 
-if empty > white && empty > black
-    disp('Empty Square') ;
-elseif white > empty && white > black 
-    disp('White piece') ;
-elseif black > white && black > empty
-    disp('Black piece') ;
-end
+    if empty > white && empty > black
+        disp('Empty Square') ;
+        dir = 'Images' ;
+        str = sprintf('+3.png');
+        imwrite(image,fullfile(dir,str),'png') ;
+        
+    elseif white > empty && white > black 
+        disp('White piece') ;
+        dir = 'Images/W1' ;
+        str = sprintf('white_%d.png',var);
+        imwrite(image,fullfile(dir,str),'png') ;
+        var = var + 1 ;
+    end
 end
 

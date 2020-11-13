@@ -12,15 +12,15 @@
 % +ve - white
 % -ve - black
 
-clc ; clear ; close all ;
+clc ; clear all; close all ;
 axis off ; set(gca,'Color','none')
 %% Board setup
-board = imread("Images/board2.png") ;
+board = imread("board2.png") ;
 
 [corner_pt, board_size] = detectCheckerboardPoints(board) ;
 board_matrix = zeros(8,8,3) ;
 
-% Got starting edge by checking data points
+% Corner points
 y_pts = [corner_pt(1:7:49,2)];
 y_pts = [y_pts;y_pts(end)+y_pts(2)-y_pts(1)] ;
 x_pts = [corner_pt(1:7,1)] ; 
@@ -44,15 +44,29 @@ Y = (reshape(board_matrix(:,:,2),1,64)) ;
 board_im = imshow(board); hold on
 scatter(X,Y); hold on
 
-%% black pieces
+%% Pieces
+black_set = zeros(150,150,6) ;
+white_set = zeros(150,150,6) ;
 
-[queen,m,alpha] = imread("w_queen.png","png") ;
-queen = imresize(queen,[square_size,NaN]) ;
-
+for piece = 1:6
+    piece
+    dir = "Images" ;
+    black_filename = sprintf("-%d.png",piece) ;
+    white_filename = sprintf("%d.png",piece)  ;
+    
+    white_piece = im2gray(imread(fullfile(dir,white_filename))) ;
+    black_piece = im2gray(imread(fullfile(dir,black_filename))) ;
+    
+    white_piece = imresize(white_piece,[square_size,square_size]) ;
+    black_piece = imresize(black_piece,[square_size,square_size]) ;
+    
+    black_set(:,:,piece) = black_piece ;
+    white_set(:,:,piece) = white_piece ;
+end
 
 queen_pos_x = [board_matrix(1,5,1),board_matrix(1,6,1)] ;
 queen_pos_y = [board_matrix(1,5,2),board_matrix(1,6,2)] ;
 
-image(queen,'XData',queen_pos_x,'YData',queen_pos_y) %,'AlphaData', alpha)
+imshow(queen,'XData',queen_pos_x,'YData',queen_pos_y) ;
 
 %% white pieces
