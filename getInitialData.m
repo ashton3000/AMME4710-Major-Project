@@ -4,18 +4,21 @@
 function [side_length, centrepoints] = getInitialData(im)
     im = rgb2gray(im);
 
-    im = imgaussfilt(im, 4);
+    %im = imgaussfilt(im, 2);
 
-    se  = strel('disk',10,0);
-    im = imclose(im, se);
+%     se  = strel('disk',10,0);
+%     im = imclose(im, se);
     
 
 
 
 
     [points1, boardSize] = detectCheckerboardPoints(im, 'MinCornerMetric', 0.05);
-
-  
+%     metric = 0.05;
+% while boardSize(1) ~= 8
+%     [points1, boardSize] = detectCheckerboardPoints(im, 'MinCornerMetric', metric);
+%     metric = metric + 0.05;
+% end
 
    
     [bottomleftx, index] = min(points1(:,1));
