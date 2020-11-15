@@ -41,6 +41,7 @@ function MovePiece(from,to,piece_id)
     
     if board_matrix(to(1),to(2)) ~= 0
         delete(img_matrix{to(1),to(2)}) ;
+    end
     
     % Remove piece from original tile
     delete(img_matrix{from(1),from(2)}) ;
