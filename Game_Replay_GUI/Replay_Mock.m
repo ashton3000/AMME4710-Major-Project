@@ -29,8 +29,6 @@ board_matrix = zeros(8,8) ;
 x_pts = zeros(1,8) ;
 y_pts = zeros(1,8) ;
 
-cols = 'a':'h' ;
-
 % Top left corner points
 pts_7grid = reshape(corner_pt,[7,7,2]);
 
@@ -45,12 +43,11 @@ y_pts = flip(y_pts) ;
 tile_size = ceil(x_pts(2) - x_pts(1)) ;
 
 board_im = imshow(board); hold on
-scatter(x_pts,y_pts); hold on
 
 %% Pieces
 
 % Scalling to fit pieces with margins on all side
-scale = 0.85;
+scale = 0.95;
 square_size = ceil(scale*tile_size)  ;
 
 X = x_pts + (0.5*(tile_size-square_size)) ;
@@ -69,8 +66,12 @@ for piece = 1:6
     black_piece = imresize(black_piece,[square_size,square_size]) ;
     
     black_set(:,:,piece) = black_piece ;
+    inv_black_set(:,:,piece) = uint8(255) - black_piece ;
     white_set(:,:,piece) = white_piece ;
+    inv_white_set(:,:,piece) = uint8(255) - white_piece ;
 end
+
+piece_set = {white_set ; black_set ; inv_white_set ; inv_black_set} ;
 
 % Assuming top edge is white (can be changed using flip)
 board_matrix(1,:) = [ 2:6 4:-1:2] ;
@@ -78,24 +79,29 @@ board_matrix(2,:) = 1 ;
 
 board_matrix(end,:) = [-2:-1:-6 -4:-2] ;
 board_matrix(end-1,:) = -1 ;
-    
-%% Check square color
+
+imsize = length(black_piece) ;
+img_matrix = cell(8,8) ;
+%% Check square color and place piece according to board setup
 
 for row_b = 1:8
     for col_b = 1:8
-        if board_matrix(row_b,col_b) ~= 0 
+        square_state = board_matrix(row_b,col_b) ;
+        if square_state ~= 0
             [x_pos,y_pos,bg_color] = BoardCoordinates(row_b,col_b) ;
-            disp(bg_color) ;
-            disp(board_matrix(row_b,col_b));
+            piece_set_index = PlacePiece(square_state,bg_color) ;
+            piece = piece_set{piece_set_index} ;
+            im = piece(:,:,abs(square_state)) ;
+            img_matrix{row_b,col_b} = imshow(im,'XData',x_pos,'YData',y_pos) ;  
+            hold on ;
         end
     end
 end
-            
 
-
-% imshow((uint8(255) - white_set(:,:,4)),'XData',x_pos,'YData',y_pos) ;
-
-
+%% Save .mat files
+save("Game_Replay_GUI/GUI_images.mat",'board','piece_set') ;
+save("Game_Replay_GUI/GUI_var.mat",'X','x_pts','Y','y_pts','tile_size','square_size') ;
+%%
 function [x_pos,y_pos,bg_color] = BoardCoordinates(row,col)
 % Returns x and y positions for piece image to be placed at
     global X Y square_size
@@ -114,4 +120,37 @@ function tile_color = CheckSquareColor(row,col)
     tile = imbinarize(tile) ;
 %     Find mode of matrix to identify square color
     [tile_color,~] = mode(mode(tile(:,:))) ;
+end
+
+function piece_set_index = PlacePiece(square_state,bg_color)
+    % White square piece
+    if bg_color
+    %     white piece
+        if square_state > 0 
+            piece_set_index = 1 ;
+
+    %      black pawn
+        elseif square_state == -1  
+            piece_set_index = 4 ;
+
+    %      black pieces
+        elseif square_state < -1
+            piece_set_index = 2 ;
+        end
+
+    % Black square piece
+    else
+    %     white piece
+        if square_state > 1 
+            piece_set_index = 4 ;
+
+    %      white pawn
+        elseif square_state == 1  
+            piece_set_index = 2 ;
+
+    %      black pieces
+        elseif square_state < 0
+            piece_set_index = 3 ;
+        end
+    end
 end

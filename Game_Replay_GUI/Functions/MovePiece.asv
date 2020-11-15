@@ -1,0 +1,25 @@
+%% MovePiece
+% Author - Tanishq Jain
+% Moves piece as they're moved in video
+
+% Needs global img_matrix and must be r
+% board_matrix = zeros(8)
+% img_matrix = cell{8}
+
+% Argument - flip = bool 
+
+function MovePiece(from,to,piece_id)
+global img_matrix 
+load Game_Replay_GUI/GUI_images.mat ;
+
+% Remove piece from original tile
+delete(img_matrix{from(1),from(2)}) ;
+
+% get information about new tile
+[x_pos,y_pos,bg_color] = BoardCoordinates(to(1),to(2)) ;
+piece_set_index = PlacePiece(piece_id,bg_color) ;
+piece = piece_set{piece_set_index} ;
+im = piece(:,:,abs(piece_id)) ;
+img_matrix{to(1),to(2)} = imshow(im,'XData',x_pos,'YData',y_pos);
+hold on;
+end
