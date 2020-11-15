@@ -9,7 +9,7 @@ global board_matrix img_matrix
 board_matrix = zeros(8) ;
 img_matrix = cell(8);
 
-StartBoard(0) ;
+StartBoard(1) ;
 
-MovePiece([2,1],[7,1],1);
-MovePiece([7,1],[8,2],1);
+MovePiece([9-2,2],[9-6,3],1);
+%MovePiece([9,1],[9-8,2],1);

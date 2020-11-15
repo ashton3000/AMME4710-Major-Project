@@ -3,12 +3,22 @@ clc;
 close all;
 %im = rgb2gray(imread('boardpieces.jpeg'));
 
+addpath('Game_Replay_GUI/Functions') ;
+load Game_Replay_GUI/GUI_images.mat ;
+
+global board_matrix img_matrix
+
+board_matrix = zeros(8) ;
+img_matrix = cell(8);
+
+StartBoard(1) ;
 
 cam = webcam;
 cam.Resolution = '1280x1024';
 cam.Sharpness = 1;
 cam.Brightness = 60;
 cam.Contrast = 5;
+
 
 im = snapshot(cam);
 
@@ -41,16 +51,16 @@ full_game_matrix = initGameMatrix();
 
 index = 1;
 
-
-imshow(im);
-
-for i = 1:8
-    for j = 1:8
-        hold on;
-        scatter(location_matrix(i,j,1), location_matrix(i,j,2));
-        pause(0.1);
-    end
-end
+% figure;
+% imshow(im);
+% 
+% for i = 1:8
+%     for j = 1:8
+%         hold on;
+%         scatter(location_matrix(i,j,1), location_matrix(i,j,2));
+%         pause(0.1);
+%     end
+% end
 
 
 
@@ -58,6 +68,7 @@ game_finished = 0;
 move_number = 1;
 im = snapshot(cam);
 prev_im = rgb2gray(im);
+disp('Ready');
 while game_finished == 0
         [game_finished, full_game_matrix, new_im, move_number] = checkMove2(full_game_matrix, location_matrix, cam, move_number, side_length, prev_im);
         
@@ -67,7 +78,7 @@ while game_finished == 0
 %         end
         
         prev_im = new_im;
-        
+        pause(0.2);
     
     
 end
