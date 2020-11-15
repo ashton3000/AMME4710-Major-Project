@@ -9,9 +9,12 @@
 %            piece_id is the id for the piece as shown in PlacePiece
 
 function MovePiece(from,to,piece_id)
-    global img_matrix 
+    global img_matrix board_matrix
     load Game_Replay_GUI/GUI_images.mat ;
-
+    
+    if board_matrix(to(1),to(2)) ~= 0
+        delete(img_matrix{to(1),to(2)}) ;
+    
     % Remove piece from original tile
     delete(img_matrix{from(1),from(2)}) ;
 

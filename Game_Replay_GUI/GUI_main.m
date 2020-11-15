@@ -11,4 +11,5 @@ img_matrix = cell(8);
 
 StartBoard(0) ;
 
-MovePiece([2,1],[4,1],1);
+MovePiece([2,1],[7,1],1);
+MovePiece([7,1],[8,2],1);
