@@ -13,7 +13,7 @@ function [side_length, centrepoints] = getInitialData(im)
 
 
 
-    [points1, boardSize] = detectCheckerboardPoints(im, 'MinCornerMetric', 0.05);
+    [points1, boardSize] = detectCheckerboardPoints(im, 'MinCornerMetric', 0.3);
 %     metric = 0.05;
 % while boardSize(1) ~= 8
 %     [points1, boardSize] = detectCheckerboardPoints(im, 'MinCornerMetric', metric);

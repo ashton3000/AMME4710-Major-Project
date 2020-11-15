@@ -1,6 +1,6 @@
 clear;
 clc;
-
+close all;
 %im = rgb2gray(imread('boardpieces.jpeg'));
 
 
@@ -41,6 +41,19 @@ full_game_matrix = initGameMatrix();
 
 index = 1;
 
+
+imshow(im);
+
+for i = 1:8
+    for j = 1:8
+        hold on;
+        scatter(location_matrix(i,j,1), location_matrix(i,j,2));
+        pause(0.1);
+    end
+end
+
+
+
 game_finished = 0;
 move_number = 1;
 im = snapshot(cam);
@@ -48,10 +61,10 @@ prev_im = rgb2gray(im);
 while game_finished == 0
         [game_finished, full_game_matrix, new_im, move_number] = checkMove2(full_game_matrix, location_matrix, cam, move_number, side_length, prev_im);
         
-        for i = 1:5
-            pause(1);
-            disp(6-i);
-        end
+%         for i = 1:2
+%             pause(1);
+%             disp(2-i);
+%         end
         
         prev_im = new_im;
         
@@ -59,7 +72,12 @@ while game_finished == 0
     
 end
 
-
+if game_finished == 1
+    disp('Black wins!');
+    
+elseif game_finished == 2
+    disp('White wins!');
+end
 
 
 % for i = 1:8
