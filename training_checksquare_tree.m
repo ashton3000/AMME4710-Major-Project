@@ -63,5 +63,5 @@ index = 1;
 feature_labels = zeros(32,1);
 feature_labels(1:16) = 1;
 
-data_tree = fitctree(data_features, feature_labels, 'OptimizeHyperparameters', 'auto');
+%data_tree = fitctree(data_features, feature_labels, 'OptimizeHyperparameters', 'auto');
 

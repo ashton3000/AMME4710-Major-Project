@@ -1,6 +1,6 @@
 clear;
 clc;
-
+close all;
 %im = rgb2gray(imread('boardpieces.jpeg'));
 
 
@@ -27,12 +27,13 @@ im = snapshot(cam);
 %im  = imread('boardpieces.jpeg');
 [side_length, centrepoints] = getInitialData(im);
 
-
+% 
 % im = imgaussfilt(im, 4);
 % 
 % se  = strel('disk',10,0);
 % im = imclose(im, se);
-%imshow(im);
+
+%im = rgb2gray(getCropped(centrepoints(35,:), side_length, im));
 
 location_matrix = setupLocationMatrix(side_length, centrepoints, im);
 
@@ -40,15 +41,56 @@ full_game_matrix = initGameMatrix();
 
 index = 1;
 
+
+imshow(im);
+
 for i = 1:8
     for j = 1:8
-        if full_game_matrix(i,j,1) > 0
-                empty(index) = checkEmpty([location_matrix(i,j,1),location_matrix(i,j,2)], side_length, im);
-                index = index + 1;
-        end
+        hold on;
+        scatter(location_matrix(i,j,1), location_matrix(i,j,2));
+        pause(0.1);
     end
 end
 
+
+
+game_finished = 0;
+move_number = 1;
+im = snapshot(cam);
+prev_im = rgb2gray(im);
+while game_finished == 0
+        [game_finished, full_game_matrix, new_im, move_number] = checkMove2(full_game_matrix, location_matrix, cam, move_number, side_length, prev_im);
+        
+%         for i = 1:2
+%             pause(1);
+%             disp(2-i);
+%         end
+        
+        prev_im = new_im;
+        
+    
+    
+end
+
+if game_finished == 1
+    disp('Black wins!');
+    
+elseif game_finished == 2
+    disp('White wins!');
+end
+
+
+% for i = 1:8
+%     for j = 1:8
+% %         if full_game_matrix(i,j,1) > 0
+% %                 empty(index) = checkEmpty([location_matrix(i,j,1),location_matrix(i,j,2)], side_length, im);
+% %                 index = index + 1;
+% %         end
+%         %empty(i,j) = checkEmpty([location_matrix(i,j,1),location_matrix(i,j,2)], side_length, im);
+%         %index = index + 1;
+%     end
+% end
+% 
 
 % game_finished = 0;
 % move_number = 1;
@@ -69,15 +111,15 @@ end
 
 
 
-imshow(im);
-
-for i = 1:8
-    for j = 1:8
-        hold on;
-        scatter(location_matrix(i,j,1), location_matrix(i,j,2));
-        pause(0.5);
-    end
-end
+% imshow(im);
+% 
+% for i = 1:8
+%     for j = 1:8
+%         hold on;
+%         scatter(location_matrix(i,j,1), location_matrix(i,j,2));
+%         pause(0.5);
+%     end
+% end
 
 % for i = 1:36
 %     
