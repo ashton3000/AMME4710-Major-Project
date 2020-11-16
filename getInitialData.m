@@ -14,11 +14,17 @@ function [side_length, centrepoints] = getInitialData(im)
 
 
     [points1, boardSize] = detectCheckerboardPoints(im, 'MinCornerMetric', 0.3);
-%     metric = 0.05;
-% while boardSize(1) ~= 8
-%     [points1, boardSize] = detectCheckerboardPoints(im, 'MinCornerMetric', metric);
-%     metric = metric + 0.05;
-% end
+    metric = 0.05;
+    increment = 0;
+    while boardSize(1) ~= 8
+        [points1, boardSize] = detectCheckerboardPoints(im, 'MinCornerMetric', metric);
+        metric = metric + 0.05;
+        increment = increment + 1;
+        if increment > 30
+            disp('cannot find 8x8');
+            break;
+        end
+    end
 
    
     [bottomleftx, index] = min(points1(:,1));

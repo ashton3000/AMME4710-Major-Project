@@ -9,19 +9,26 @@ function location_matrix = setupLocationMatrix(side_length, centrepoints, im)
             location_matrix(i, 2:7, 2) = centrepoints(flip(6*(i-2)+1:6*(i-1)), 2); 
         end  
         
+        centre_point(1) = location_matrix(3, 2, 1);
+        centre_point(2) = location_matrix(3, 2, 2); 
+        imcropped1 = rgb2gray(getCropped(centre_point, side_length, im));
+        h = size(imcropped1,1);
+        w = size(imcropped1,2);
+        centre_point(1) = location_matrix(3, 3, 1);
+        centre_point(2) = location_matrix(3, 3, 2); 
+        imcropped2 = rgb2gray(getCropped(centre_point, side_length, im));
+        thresh = 0.85*mean([mean(imcropped1(0.25*h:0.75*h, 0.25*w:0.75*w), 'all'),mean(imcropped2(0.25*h:0.75*h, 0.25*w:0.75*w), 'all')]);
+        
+        
         centre_point(1) = location_matrix(2, 2, 1);
         centre_point(2) = location_matrix(2, 2, 2); 
-        for i = 1:4
-            colour(i) = checkSquare2(centre_point, side_length, im);
-        end
-        colour1 = mode(colour);
+
+        colour1 = checkSquare2(centre_point, side_length, im, thresh);
         
         centre_point(1) = location_matrix(2, 7, 1);
         centre_point(2) = location_matrix(2, 7, 2);
-        for i = 1:4
-            colour(i) = checkSquare2(centre_point, side_length, im);
-        end
-        colour2 = mode(colour);
+        
+        colour2 = checkSquare2(centre_point, side_length, im, thresh);
         
         switch colour1
             case 0

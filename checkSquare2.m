@@ -1,4 +1,4 @@
-function colour = checkSquare2(centre_point, side_length, im)
+function colour = checkSquare2(centre_point, side_length, im, thresh)
         
         %load('colour_tree_webcam_adjusted');
         imcropped = getCropped(centre_point, side_length, im);
@@ -21,10 +21,10 @@ function colour = checkSquare2(centre_point, side_length, im)
         centre_region = mean(imcropped(0.25*h:0.75*h, 0.25*w:0.75*w), 'all');
         wider_region = mean(imcropped(0.1*h:0.9*h, 0.1*w:0.9*w), 'all');
         
-        if centre_region > 150 && wider_region > 150
+        if centre_region > thresh && wider_region > thresh
             colour = 0;
             
-        elseif centre_region < 150 && wider_region < 150
+        elseif centre_region < thresh && wider_region < thresh
             colour = 1;
             
         elseif centre_region < wider_region

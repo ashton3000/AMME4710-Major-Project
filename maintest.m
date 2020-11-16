@@ -51,16 +51,16 @@ full_game_matrix = initGameMatrix();
 
 index = 1;
 
-% figure;
-% imshow(im);
-% 
-% for i = 1:8
-%     for j = 1:8
-%         hold on;
-%         scatter(location_matrix(i,j,1), location_matrix(i,j,2));
-%         pause(0.1);
-%     end
-% end
+figure;
+imshow(im);
+
+for i = 1:8
+    for j = 1:8
+        hold on;
+        scatter(location_matrix(i,j,1), location_matrix(i,j,2));
+        pause(0.1);
+    end
+end
 
 
 
@@ -78,7 +78,7 @@ while game_finished == 0
 %         end
         
         prev_im = new_im;
-        pause(0.2);
+        pause(0.1);
     
     
 end

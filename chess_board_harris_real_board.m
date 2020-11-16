@@ -6,7 +6,18 @@ clc;
 clf;
 clf reset;
 
-im = rgb2gray(imread('image3.jpeg'));
+
+
+cam = webcam;
+cam.Resolution = '1280x1024';
+cam.Sharpness = 1;
+cam.Brightness = 60;
+cam.Contrast = 5;
+
+
+im = rgb2gray(snapshot(cam));
+
+%im = rgb2gray(imread('image3.jpeg'));
 imshow(im);
 
 im = imgaussfilt(im, 4);

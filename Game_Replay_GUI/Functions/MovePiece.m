@@ -12,32 +12,32 @@ function MovePiece(from,to,piece_id)
     global img_matrix board_matrix
     load Game_Replay_GUI/GUI_images.mat ;
     
-%     switch piece_id
-%         case num2cell(1:8)
-%             piece_id = 1;
-%         case num2cell(9:10)
-%             piece_id = 2;
-%         case num2cell(11:12)
-%             piece_id = 3;
-%         case num2cell(13:14)
-%             piece_id = 4;
-%         case 15
-%             piece_id = 5;
-%         case 16
-%             piece_id = 6;
-%         case num2cell(21:28)
-%             piece_id = -1;
-%         case num2cell29:30
-%             piece_id = -2;
-%         case num2cell(31:32)
-%             piece_id = -3;
-%         case num2cell(33:34)
-%             piece_id = -4;
-%         case 35
-%             piece_id = -5;
-%         case 36
-%             piece_id = -6;     
-%     end
+    switch piece_id
+        case num2cell(1:8)
+            piece_id = 1;
+        case num2cell(9:10)
+            piece_id = 2;
+        case num2cell(11:12)
+            piece_id = 3;
+        case num2cell(13:14)
+            piece_id = 4;
+        case 15
+            piece_id = 5;
+        case 16
+            piece_id = 6;
+        case num2cell(21:28)
+            piece_id = -1;
+        case num2cell29:30
+            piece_id = -2;
+        case num2cell(31:32)
+            piece_id = -3;
+        case num2cell(33:34)
+            piece_id = -4;
+        case 35
+            piece_id = -5;
+        case 36
+            piece_id = -6;     
+    end
     
     if board_matrix(to(1),to(2)) ~= 0
         delete(img_matrix{to(1),to(2)}) ;
