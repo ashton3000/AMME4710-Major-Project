@@ -60,5 +60,8 @@ function MovePiece(from,to,piece_id)
     
     % place piece at x_pos and y_pos
     img_matrix{to(1),to(2)} = imshow(im,'XData',x_pos,'YData',y_pos);
+    % Vaccate original square tile and update new position
+    board_matrix(from(1),from(2)) = 0 ;
+    board_matrix(to(1),to(2)) = piece_id ;
     hold on;
 end
